@@ -73,10 +73,6 @@ function _dispatcher(line) {
         if (containedElements['title']) {
             line = _convertTitle(line);
         }
-        // containedElements['paragraph'] = _isParagraph(line);
-        // if (containedElements['paragraph']) {
-        //     line = _convertParagraph(line);
-        // }
         containedElements['splitLine'] = _isSplitLine(line);
         if (containedElements['splitLine']) {
             line = _convertSplitLine(line);
@@ -137,7 +133,10 @@ function _isBreakLine(line) {
     //10. ---
     //11. <img>
     //12. <pre><code> <pre></code>
-    if (line.search(/<h[1-6].*<\/h[1-6]>/i) >= 0) {
+    if (line.replace(/\s*/g, '') == '<blockquote>' || line.replace(/\s*/g, '') == '</blockquote>') {
+        return false;
+    }
+    if (_convertRuntime['quote'] > 0) {
         return false;
     }
     if (line.search(/(<blockquote>)|(<\/blockquote>)/i) >= 0) {
@@ -149,13 +148,13 @@ function _isBreakLine(line) {
     if (line == '' || line.search(/^\s*$/) >= 0) {
         return false;
     }
-    if (line.replace(/\s*/g, '') == '[ol' || line.replace(/\s*/g, '') == 'ol]') {
+    if (line.replace(/\s*/g, '') == '<ol>' || line.replace(/\s*/g, '') == '</ol>') {
         return false;
     }
     if (_convertRuntime['ol'] > 0) {
         return false;
     }
-    if (line.replace(/\s*/g, '') == '[ul' || line.replace(/\s*/g, '') == 'ul]') {
+    if (line.replace(/\s*/g, '') == '<ul>' || line.replace(/\s*/g, '') == '</ul>') {
         return false;
     }
     if (_convertRuntime['ul'] > 0) {
@@ -211,17 +210,16 @@ function _isItalicized(line) {
 }
 
 function _isQuote(line) {
-    if (_convertRuntime['quote'] == 1) {
-        if (line.search(/^>\s.*$/) == -1) {
-            _convertRuntime['quote'] = 2;
-            return true;
-        }
-    }
-    if (line.search(/^>\s.*$/) >= 0) {
+    if (line.replace(/\s*/g, "") == '<:') {
         return true;
-    } else {
-        return false;
     }
+    if (line.replace(/\s*/g, "") == ':>') {
+        return true;
+    }
+    if (_convertRuntime['quote'] > 0) {
+        return true;
+    }
+    return false;
 }
 
 function _isOl(line) {
@@ -310,23 +308,22 @@ function _convertTitle(line) {
     }
 }
 
-// function _convertParagraph(line) {
-//     if (line == '{') {
-//         return '<p>'
-//     } else if (line == '}') {
-//         return '</p>'
-//     } else {
-//         return '<h1>Markdown convert error: on function _convertParagraph(line)</h1>';
-//     }
-// }
-
 function _convertBreakLine(line) {
     return '<p>' + line + '</p>';
 }
 
 function _convertBold(line) {
+    let codeBlocks = new Array();
+    let codePos0 = -1;
+    for (; codePos0 = line.search(/(<code>).*?(<\/code>)/) != -1;) {
+        let codePos1 = line.indexOf('</code>', codePos0);
+        codeBlocks.push(line.slice(codePos0 + 6, codePos1));
+        line = line.replace(/(<code>).*?(<\/code>)/, '<mycode>' + (codeBlocks.length - 1) + '</mycode>');
+    }
+
     if (_convertRuntime['multiBold'] == false) {
         while (true) {
+            //Here a problem: when ** is in Single line code block for c++.
             //Single Line
             let start = line.search(/\*\*\S/);
             if (start >= 0) {
@@ -352,10 +349,25 @@ function _convertBold(line) {
             _convertRuntime['multiBoldStartFinished'] = false;
         }
     }
+
+    for (let i = 0; i < codeBlocks.length; i++) {
+        const element = codeBlocks[i];
+        line = line.replace('<mycode>' + i + '</mycode>', '<code>' + element + '</code>');
+    }
+
     return line;
 }
 
 function _convertItalicized(line) {
+
+    let codeBlocks = new Array();
+    let codePos0 = -1;
+    for (; codePos0 = line.search(/(<code>).*?(<\/code>)/) != -1;) {
+        let codePos1 = line.indexOf('</code>', codePos0);
+        codeBlocks.push(line.slice(codePos0 + 6, codePos1));
+        line = line.replace(/(<code>).*?(<\/code>)/, '<mycode>' + (codeBlocks.length - 1) + '</mycode>');
+    }
+
     if (_convertRuntime['multiItalicized'] == false) {
         while (true) {
             //Single Line
@@ -383,21 +395,26 @@ function _convertItalicized(line) {
             _convertRuntime['multiItalicizedStartFinished'] = false;
         }
     }
+    for (let i = 0; i < codeBlocks.length; i++) {
+        const element = codeBlocks[i];
+        line = line.replace('<mycode>' + i + '</mycode>', '<code>' + element + '</code>');
+    }
     return line;
 }
 
 function _convertQuote(line) {
-    if (_convertRuntime['quote'] == 0) {
-        _convertRuntime['quote'] = 1;
-        line = '<blockquote>\n' + line.slice(2) + '<br>';
-        return line;
+    if (line.replace(/\s*/g, "") == '<:') {
+        _convertRuntime['quote']++;
+        return '<blockquote>';
     }
-    if (_convertRuntime['quote'] == 1) {
-        return line.slice(2);
-    }
-    if (_convertRuntime['quote'] == 2) {
-        _convertRuntime['quote'] = 0;
-        return '</blockquote>\n' + line;
+    else if (line.replace(/\s*/g, "") == ':>') {
+        _convertRuntime['quote']--;
+        return '</blockquote>';
+    } else if (line.search(/^\s*$/gm) == -1 || line != '') {
+        let wordPos = line.search(/\S/);
+        return '<p>' + line.slice(wordPos) + '</p>';
+    } else {
+        return '';
     }
 }
 
@@ -467,7 +484,8 @@ function _convertImg(line) {
 function _convertOriginal(output) {
     for (let i = 0; i < _convertRuntime['originalSet'].length; i++) {
         const element = _convertRuntime['originalSet'][i];
-        output = output.replace(RegExp("\{-:WAIT_" + i + ":\-}"), element);
+        let escapedText = _escapeText(element);
+        output = output.replace(RegExp("\{-:WAIT_" + i + ":\-}"), escapedText);
     }
     return output;
 }
@@ -484,10 +502,18 @@ function _convertCodeBlock(line) {
         let pos0 = line.search(/`.*?`/);
         if (pos0 >= 0) {
             let pos1 = line.indexOf('`', pos0 + 1);
-            line = line.slice(0, pos0) + '<code>' + line.slice(pos0 + 1, pos1) + '</code>' + line.slice(pos1 + 1);
+            line = line.slice(0, pos0) + '<code>' + _escapeText(line.slice(pos0 + 1, pos1)) + '</code>' + line.slice(pos1 + 1);
         } else {
             break;
         }
     }
     return line;
+}
+
+function _escapeText(escapedText) {
+    //Only supports one single line.
+    escapedText = escapedText.replace(/</g, '&lt;');
+    escapedText = escapedText.replace(/>/g, '&gt;');
+    escapedText = escapedText.replace(/\s/g, '&nbsp;');
+    return escapedText;
 }
