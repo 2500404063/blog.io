@@ -30,6 +30,7 @@ function markdownToHtml(mdSrc) {
         'originalBlock': false,
         'originalSet': new Array(),
         'codeBlock': false,
+        'texBlock': false,
     };
     _convertTitleIdCount = 0;
     let lines = mdSrc.split(/\n/gm);
@@ -67,8 +68,8 @@ function _dispatcher(line) {
     };
     line = _originalStart(line);
     line = _convertCodeBlock(line);
-
-    if (!_convertRuntime['codeBlock']) {
+    _omitTexConvert(line);
+    if (!_convertRuntime['codeBlock'] || !_convertRuntime['texBlock']) {
         containedElements['title'] = _isContainTitle(line);
         if (containedElements['title']) {
             line = _convertTitle(line);
@@ -133,6 +134,7 @@ function _isBreakLine(line) {
     //10. ---
     //11. <img>
     //12. <pre><code> <pre></code>
+    //13. $$
     if (line.replace(/\s*/g, '') == '<blockquote>' || line.replace(/\s*/g, '') == '</blockquote>') {
         return false;
     }
@@ -167,6 +169,9 @@ function _isBreakLine(line) {
         return false;
     }
     if (line == '</pre></code>') {
+        return false;
+    }
+    if (line.replace(/\s*/g, '') == '&&') {
         return false;
     }
     return true;
@@ -516,4 +521,10 @@ function _escapeText(escapedText) {
     escapedText = escapedText.replace(/>/g, '&gt;');
     escapedText = escapedText.replace(/\s/g, '&nbsp;');
     return escapedText;
+}
+
+function _omitTexConvert(line) {
+    if (line.replace(/\s*/g, '') == '&&') {
+        _convertRuntime['texBlock'] = !_convertRuntime['texBlock'];
+    }
 }
