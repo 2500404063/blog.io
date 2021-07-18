@@ -1,6 +1,6 @@
 var contentArray = {
-    "Default Page": "./pages_appdev/default/default.md",
-    "CPP高级编程": {
+    'Default Page': './pages_appdev/default/default.md',
+    'CPP高级编程': {
         '泛型': './pages_appdev/advanced_cpp/1.md',
         'Using': './pages_appdev/advanced_cpp/2.md',
         'Tuple元组': './pages_appdev/advanced_cpp/3.md',
@@ -9,9 +9,13 @@ var contentArray = {
         'Constexpr': './pages_appdev/advanced_cpp/6.md',
         '引用右值': './pages_appdev/advanced_cpp/7.md',
         '智能指针': './pages_appdev/advanced_cpp/8.md',
-        '协程':'./pages_appdev/advanced_cpp/9.md',
+        '协程': './pages_appdev/advanced_cpp/9.md',
     },
-    "线程": {
-        "线程池": "./pages_appdev/thread/1.md"
+    '线程': {
+        '线程池': './pages_appdev/thread/1.md'
+    },
+    'Flutter': {
+        'Flutter传统组件分类': './pages_appdev/flutter/1.md',
+        'Flutter高级组件分类': './pages_appdev/flutter/2.md',
     }
 };
