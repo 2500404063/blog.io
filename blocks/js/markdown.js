@@ -69,7 +69,7 @@ function _dispatcher(line) {
     line = _originalStart(line);
     line = _convertCodeBlock(line);
     _omitTexConvert(line);
-    if (!_convertRuntime['codeBlock'] || !_convertRuntime['texBlock']) {
+    if (!_convertRuntime['codeBlock'] && !_convertRuntime['texBlock']) {
         containedElements['title'] = _isContainTitle(line);
         if (containedElements['title']) {
             line = _convertTitle(line);
@@ -171,7 +171,7 @@ function _isBreakLine(line) {
     if (line == '</pre></code>') {
         return false;
     }
-    if (line.replace(/\s*/g, '') == '&&') {
+    if (line.replace(/\s*/g, '') == '$$') {
         return false;
     }
     return true;
@@ -524,7 +524,7 @@ function _escapeText(escapedText) {
 }
 
 function _omitTexConvert(line) {
-    if (line.replace(/\s*/g, '') == '&&') {
+    if (line.replace(/\s*/g, '') == '$$') {
         _convertRuntime['texBlock'] = !_convertRuntime['texBlock'];
     }
 }
