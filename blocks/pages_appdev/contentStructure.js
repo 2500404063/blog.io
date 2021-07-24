@@ -11,11 +11,16 @@ var contentArray = {
         '智能指针': './pages_appdev/advanced_cpp/8.md',
         '协程': './pages_appdev/advanced_cpp/9.md',
     },
-    '线程': {
-        '线程池': './pages_appdev/thread/1.md'
+    '服务后端': {
+        '多线程相关': {
+            '线程池': './pages_appdev/thread/1.md'
+        },
     },
-    'Flutter': {
-        'Flutter传统组件分类': './pages_appdev/flutter/1.md',
-        'Flutter高级组件分类': './pages_appdev/flutter/2.md',
+    '移动前端': {
+        'Flutter': {
+            'Flutter传统组件分类': './pages_appdev/flutter/1.md',
+            'Flutter高级组件分类': './pages_appdev/flutter/2.md',
+            'Flutter布局系统详解': './pages_appdev/flutter/3.md',
+        }
     }
 };
