@@ -10,6 +10,7 @@ var contentArray = {
         '引用右值': './pages_appdev/advanced_cpp/7.md',
         '智能指针': './pages_appdev/advanced_cpp/8.md',
         '协程': './pages_appdev/advanced_cpp/9.md',
+        'IO高级': './pages_appdev/advanced_cpp/10.md',
     },
     '服务后端': {
         '多线程相关': {
