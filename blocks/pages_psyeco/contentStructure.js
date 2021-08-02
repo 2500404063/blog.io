@@ -2,14 +2,16 @@ var contentArray = {
     "Default Page": "./pages_psyeco/default/default.md",
     "生活哲学": {
         "为什么要哲学?": "./pages_psyeco/life-psy/1.md",
-        "性格": {
-            "HSP高敏感人群": "./pages_psyeco/life-psy/personality/1.md"
+        "精神世界": {
+            "HSP高敏感人群": "./pages_psyeco/life-psy/inner/1.md",
+            "过度思考Overthink": "./pages_psyeco/life-psy/inner/2.md",
+            "人生三大困境-孤独": "./pages_psyeco/life-psy/inner/3.md",
+            "空": "./pages_psyeco/life-psy/inner/4.md",
         },
-        "常规思考": {
+        "变优秀": {
             "工作-心态-健康": "./pages_psyeco/life-psy/cause/1.md",
-            "过度思考Overthink": "./pages_psyeco/life-psy/cause/2.md",
             "不要犹豫,Just Do It": "./pages_psyeco/life-psy/cause/3.md",
-            "什么是充实的人生": "./pages_psyeco/life-psy/cause/4.md",
+            "如何充实自己": "./pages_psyeco/life-psy/cause/4.md",
         },
         "学习与提高": {
             "高效学习": "./pages_psyeco/life-psy/study/1.md",
