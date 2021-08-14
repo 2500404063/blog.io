@@ -6,7 +6,7 @@
 html body {
     scroll-behavior: smooth;
     overflow: hidden;
-    font-family: 'simyou', "Microsoft YaHei", "微软雅黑", "Segoe UI";
+    font-family: Courier New, cursive, '楷体', serif;
 }
 
 .list-struct {

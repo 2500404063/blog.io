@@ -1,6 +1,6 @@
 :root {
     --bg-color: white;
-    --font-family: "Microsoft YaHei", "微软雅黑", "Heiti", "黑体", "YouYuan";
+    --font-family: Courier New, cursive, '楷体', serif;
     /*h1*/
     --border-bottom: #c5c5c5;
     --border-bottom-second: #c5c5c5b4;
@@ -99,7 +99,6 @@
 
 .markdown_area code {
     border-radius: 4px;
-    background-color: rgb(238, 240, 241);
     padding: 5px;
 }
 
