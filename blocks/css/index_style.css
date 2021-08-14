@@ -1,6 +1,12 @@
+@font-face {
+    font-family: 'simyou';
+    src: url(../fonts/youyuan.ttf);
+}
+
 html body {
     scroll-behavior: smooth;
     overflow: hidden;
+    font-family: 'simyou', "Microsoft YaHei", "微软雅黑", "Segoe UI";
 }
 
 .list-struct {
@@ -22,13 +28,16 @@ html body {
     overflow: auto;
 }
 
-#contentBody::selection {
+::selection {
     color: #fff;
-    background: #3884ff;
+    background: #3867ff;
 }
 
 @media screen and (min-width:768px) {
     #contentBody {
+        width: 700px;
+    }
+    #header {
         width: 700px;
     }
 }
@@ -135,6 +144,7 @@ html body {
 }
 
 /*因为Tex插件，导致左上角有一个白点，不知道是干嘛的，就先隐藏*/
-.MJX_LiveRegion{
+
+.MJX_LiveRegion {
     display: none;
 }

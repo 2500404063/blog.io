@@ -1,8 +1,3 @@
-@font-face {
-    font-family: 'YouYuan';
-    src: url(../fonts/simyou.ttf);
-}
-
 :root {
     --bg-color: white;
     --font-family: "Microsoft YaHei", "微软雅黑", "Heiti", "黑体", "YouYuan";
@@ -16,53 +11,64 @@
     --code-bg: #e6ecf1
 }
 
-h1, h2, h3, h4, h5, h6 {
+.markdown_area h1, h2, h3, h4, h5, h6 {
     position: relative;
     margin-top: 1rem;
     margin-bottom: 1rem;
     font-weight: bold;
     line-height: 1.4;
     cursor: text;
-    font-family: var(--font-family)!important;
 }
 
-h1 {
+.markdown_area h1 {
     font-size: 2.25em;
     line-height: 1.2;
     border-bottom: solid 1px var(--border-bottom);
     padding-bottom: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.7rem;
+    transition: 0.2s;
 }
 
-h2 {
-    font-size: 1.70em;
-    line-height: 1.225;
+.markdown_area h1:hover {
+    color: #3884ff;
+    transition: 0.2s;
 }
 
-h3 {
-    font-size: 1.5em;
+.markdown_area h2 {
+    font-size: 1.60em;
+    line-height: 2;
+}
+
+.markdown_area h2::before {
+    content: '> ';
+}
+
+.markdown_area h3 {
+    font-size: 1.3em;
     line-height: 1.43;
 }
 
-h4 {
-    font-size: 1.25em;
+.markdown_area h4 {
+    font-size: 1.1em;
 }
 
-h5 {
+.markdown_area h5 {
     font-size: 1em;
 }
 
-h6 {
+.markdown_area h6 {
     font-size: 1em;
-    color: #4a4a4a
+    color: #4a4a4a;
 }
 
-p, li {
-    font-family: var(--font-family)!important;
-    color: #4a4a4a
+.markdown_area p, li {
+    color: #545454;
+    font-weight: 400;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
 }
 
-blockquote {
+.markdown_area blockquote {
     width: 100%;
     background-color: var(--box-bg);
     border-left: 4px solid var(--color-primary);
@@ -70,45 +76,45 @@ blockquote {
     padding: 0.7rem;
 }
 
-hr {
+.markdown_area hr {
     border: 0;
     color: #d0d0d5;
     background-size: 100%;
     background-image: linear-gradient(to right, rgba(190, 190, 190, 0.301), rgba(0, 0, 0, 0.75), rgba(190, 190, 190, 0.3));
 }
 
-table {
+.markdown_area table {
     margin-bottom: 1rem;
 }
 
-table thead {
+.markdown_area table thead {
     font-weight: bold;
     border-bottom: solid 2px var(--border-bottom);
 }
 
-table th, td {
+.markdown_area table th, td {
     padding: 10px 16px;
     border-bottom: dotted 1px var(--border-bottom);
 }
 
-code {
+.markdown_area code {
     border-radius: 4px;
     background-color: rgb(238, 240, 241);
     padding: 5px;
 }
 
-pre {
+.markdown_area pre {
     margin-top: 10px;
 }
 
-td.hljs-ln-line.hljs-ln-numbers {
+.markdown_area td.hljs-ln-line.hljs-ln-numbers {
     padding-right: 15px;
     color: whitesmoke;
     font-weight: 500;
     border-bottom: none;
 }
 
-td.hljs-ln-line.hljs-ln-code {
+.markdown_area td.hljs-ln-line.hljs-ln-code {
     border-bottom: none;
 }
 
@@ -142,7 +148,7 @@ input[type="checkbox"]:hover:checked:before {
     background-color: #1968e6;
 } */
 
-img {
+.markdown_area img {
     padding: .25rem;
     background-color: #fff;
     border: 1px solid #dee2e6;
