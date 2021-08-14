@@ -26,6 +26,8 @@ html body {
     display: flex;
     justify-content: center;
     overflow: auto;
+    background: linear-gradient(to top, transparent 98%, #eee 98%), linear-gradient(to right, transparent 98%, #eee 98%);
+    background-size: 1.25em 1.25em;
 }
 
 ::selection {
